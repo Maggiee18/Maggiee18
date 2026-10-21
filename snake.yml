@@ -1,0 +1,80 @@
+# Generates the profile's animated contribution snake (light + dark) and the
+# GitHub stats / top languages cards, then publishes them to the `output` branch.
+# README images point at https://raw.githubusercontent.com/Maggiee18/Maggiee18/output/<file>.svg
+
+name: Generate profile assets
+
+on:
+  schedule:
+    - cron: "17 0 * * *" # daily at 00:17 UTC (05:47 IST)
+  workflow_dispatch: # manual "Run workflow" button
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/snake.yml
+
+permissions:
+  contents: write # required to push to the `output` branch
+
+concurrency:
+  group: profile-assets
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      # 1. Contribution snake (official action by Platane)
+      - name: Generate contribution snake
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: Maggiee18
+          outputs: |
+            dist/github-snake.svg?color_snake=%23D9719A&color_dots=%23EEE8E6,%23E6D6EE,%23D3B1D9,%23D58FB3,%23B4618C
+            dist/github-snake-dark.svg?palette=github-dark&color_snake=%23F4A7C6&color_dots=%231A2133,%233B3352,%236E5A8C,%23B57AA3,%23F0A9C8
+
+      # 2. Stats cards rendered inside Actions (no dependency on a public, rate limited server)
+      - name: Stats card (dark)
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: stats
+          path: dist/stats-dark.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+          options: username=Maggiee18&show_icons=true&hide_rank=true&border_radius=16&bg_color=11162A&border_color=242B45&title_color=EBA9C4&text_color=B8B2C6&icon_color=D9C1A0
+
+      - name: Stats card (light)
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: stats
+          path: dist/stats-light.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+          options: username=Maggiee18&show_icons=true&hide_rank=true&border_radius=16&bg_color=FFFDFB&border_color=ECE2DA&title_color=B8628D&text_color=5D576E&icon_color=A4824F
+
+      - name: Top languages card (dark)
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: top-langs
+          path: dist/top-langs-dark.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+          options: username=Maggiee18&layout=compact&langs_count=8&border_radius=16&bg_color=11162A&border_color=242B45&title_color=EBA9C4&text_color=B8B2C6
+
+      - name: Top languages card (light)
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: top-langs
+          path: dist/top-langs-light.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+          options: username=Maggiee18&layout=compact&langs_count=8&border_radius=16&bg_color=FFFDFB&border_color=ECE2DA&title_color=B8628D&text_color=5D576E
+
+      # 3. Publish everything in dist/ to the `output` branch
+      - name: Publish to output branch
+        uses: crazy-max/ghaction-github-pages@v5
+        with:
+          target_branch: output
+          build_dir: dist
+          jekyll: false
+          commit_message: "chore: update profile assets"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
