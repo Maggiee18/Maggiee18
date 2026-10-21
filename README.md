@@ -31,7 +31,7 @@
 <a href="https://x.com/SaiMeghana_18"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/connect/x-dark.svg" /><img src="assets/connect/x-light.svg" width="76" alt="X (Twitter)" /></picture></a>&nbsp;
 <a href="https://github.com/Maggiee18"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/connect/github-dark.svg" /><img src="assets/connect/github-light.svg" width="76" alt="GitHub" /></picture></a>&nbsp;
 <a href="mailto:annepu.saimeghana@gmail.com"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/connect/email-dark.svg" /><img src="assets/connect/email-light.svg" width="76" alt="Email" /></picture></a>&nbsp;
-<a href="RESUME_URL"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/connect/resume-dark.svg" /><img src="assets/connect/resume-light.svg" width="76" alt="Resume" /></picture></a>
+<a href="assets/SaiMeghanaAnnepu__Resume.pdf"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/connect/resume-dark.svg" /><img src="assets/connect/resume-light.svg" width="76" alt="Resume" /></picture></a>
 
 <br />
 
