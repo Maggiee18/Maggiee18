@@ -142,6 +142,4 @@
 
 Turning ideas into working systems. ✨
 
-<img src="https://komarev.com/ghpvc/?username=Maggiee18&label=profile%20views&color=c98bb0&style=flat-square" alt="Profile views" />
-
 </div>
